@@ -25,7 +25,7 @@ public class ProductosRepository {
     //Metodos Crud
     public boolean registrarProdcuto(Productos producto) {
         Connection con = conexionDB.getConectionDB();
-        String sqlQuery = "INSERT INTO productos VALUES(null,?,?,?,?,?)";
+        String sqlQuery = "INSERT INTO productos VALUES(null,?,?,?,?,?,?)";
         int status = 1;
         try {
             if (this.preStm == null) {
@@ -35,6 +35,7 @@ public class ProductosRepository {
                 this.preStm.setInt(3, producto.getPro_stock());
                 this.preStm.setInt(4, producto.getPro_precio());
                 this.preStm.setInt(5, status);
+                this.preStm.setInt(6, producto.getCat_id());
 
                 int response = this.preStm.executeUpdate();
                 if (response > 0) {
@@ -68,7 +69,7 @@ public class ProductosRepository {
             //Los datos de la tabla se guardan en el resultSet
             ResultSet resultSet = this.preStm.executeQuery();
             while (resultSet.next()) {
-                productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("pro_status")));
+                productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("pro_status"), resultSet.getInt("cat_id")));
             }
         } catch (SQLException e) {
             System.out.println("Error en la sentencia:" + e.getMessage());
@@ -179,7 +180,7 @@ public class ProductosRepository {
 
                 ResultSet resultSet = this.preStm.executeQuery();
                 while (resultSet.next()) {
-                    productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("pro_status")));
+                    productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("pro_status"), resultSet.getInt("cat_id")));
                 }
             }
         } catch (SQLException e) {

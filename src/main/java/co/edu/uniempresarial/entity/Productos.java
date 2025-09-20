@@ -10,27 +10,37 @@ public class Productos {
     private String pro_nombre;
     private int pro_stock;
     private int pro_precio;
+    private int cat_id;
     private int pro_status;
      //Constructores 
 
-    public Productos(int pro_id, String pro_referencia, String pro_nombre, int pro_stock, int pro_precio, int pro_status) {
+    public Productos(int pro_id, String pro_referencia, String pro_nombre, int pro_stock, int pro_precio,int cat_id ,int pro_status) {
         this.pro_id = pro_id;
         this.pro_referencia = pro_referencia;
         this.pro_nombre = pro_nombre;
         this.pro_stock = pro_stock;
         this.pro_precio = pro_precio;
+        this.cat_id = cat_id;
         this.pro_status = pro_status;
-
     }
 
-    public Productos(String pro_referencia, String pro_nombre, int pro_stock, int pro_precio) {
+    public Productos(String pro_referencia, String pro_nombre, int pro_stock, int pro_precio, int cat_id) {
         this.pro_referencia = pro_referencia;
         this.pro_nombre = pro_nombre;
         this.pro_stock = pro_stock;
         this.pro_precio = pro_precio;
+         this.cat_id = cat_id;
     }
 
     public Productos() {
+    }
+
+    public int getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(int cat_id) {
+        this.cat_id = cat_id;
     }
     
 
@@ -84,7 +94,8 @@ public class Productos {
 
     @Override
     public String toString() {
-        return "Productos{" + "pro_id=" + pro_id + ", pro_referencia=" + pro_referencia + ", pro_nombre=" + pro_nombre + ", pro_stock=" + pro_stock + ", pro_precio=" + pro_precio + ", pro_status=" + pro_status + '}';
+        return "Productos{" + "pro_id=" + pro_id + ", pro_referencia=" + pro_referencia + ", pro_nombre=" + pro_nombre + ", pro_stock=" + pro_stock + ", pro_precio=" + pro_precio + ", cat_id=" + cat_id + ", pro_status=" + pro_status + '}';
     }
+
     
 }
