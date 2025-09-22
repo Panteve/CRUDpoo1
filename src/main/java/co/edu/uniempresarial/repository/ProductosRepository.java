@@ -69,7 +69,8 @@ public class ProductosRepository {
             //Los datos de la tabla se guardan en el resultSet
             ResultSet resultSet = this.preStm.executeQuery();
             while (resultSet.next()) {
-                productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("pro_status"), resultSet.getInt("cat_id")));
+                productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("cat_id"), resultSet.getInt("pro_status") ));
+            
             }
         } catch (SQLException e) {
             System.out.println("Error en la sentencia:" + e.getMessage());
@@ -91,7 +92,7 @@ public class ProductosRepository {
     //metodo para actualizar -> recibir objeto
     public boolean actualizarProducto(Productos producto) {
         Connection con = conexionDB.getConectionDB();
-        String sqlQuery = "UPDATE productos SET pro_referencia = ?, pro_nombre = ?, pro_stock = ?, pro_precio = ? WHERE pro_id  = ?";
+        String sqlQuery = "UPDATE productos SET pro_referencia = ?, pro_nombre = ?, pro_stock = ?, pro_precio = ?, cat_id = ? WHERE pro_id  = ?";
         try {
             if (this.preStm == null) {
                 this.preStm = con.prepareStatement(sqlQuery);
@@ -99,7 +100,10 @@ public class ProductosRepository {
                 this.preStm.setString(2, producto.getPro_nombre());
                 this.preStm.setInt(3, producto.getPro_stock());
                 this.preStm.setInt(4, producto.getPro_precio());
-                this.preStm.setInt(5, producto.getPro_id());
+                this.preStm.setInt(5, producto.getCat_id());
+                this.preStm.setInt(6, producto.getPro_id());
+                
+                System.out.println(producto.getCat_id());
 
                 int response = this.preStm.executeUpdate();
                 if (response > 0) {

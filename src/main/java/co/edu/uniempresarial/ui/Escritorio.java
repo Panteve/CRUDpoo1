@@ -4,6 +4,8 @@
  */
 package co.edu.uniempresarial.ui;
 
+import javax.swing.JInternalFrame;
+
 /**
  *
  * @author uestudiantes
@@ -30,7 +32,7 @@ public class Escritorio extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         Registrar = new javax.swing.JMenu();
         itemRegistrar = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        itemVisualizar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,13 +63,13 @@ public class Escritorio extends javax.swing.JFrame {
         });
         Registrar.add(itemRegistrar);
 
-        jMenuItem2.setText("Visualizar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        itemVisualizar.setText("Visualizar");
+        itemVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                itemVisualizarActionPerformed(evt);
             }
         });
-        Registrar.add(jMenuItem2);
+        Registrar.add(itemVisualizar);
 
         jMenuBar1.add(Registrar);
         jMenuBar1.add(jMenu2);
@@ -91,20 +93,29 @@ public class Escritorio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarActionPerformed
-        Registro registro = new Registro(); 
-        panelPrincipal.add(registro);
-        registro.setVisible(true);
+
     }//GEN-LAST:event_RegistrarActionPerformed
 
     private void itemRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarActionPerformed
-        Registro registro = new Registro(); 
+        JInternalFrame[] paneles = panelPrincipal.getAllFrames();
+        for (int i = 0; i < paneles.length; i++) {
+            paneles[i].dispose();
+        }
+        Registro registro = new Registro();
         panelPrincipal.add(registro);
         registro.setVisible(true);
+
     }//GEN-LAST:event_itemRegistrarActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void itemVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVisualizarActionPerformed
+        JInternalFrame[] paneles = panelPrincipal.getAllFrames();
+        for (int i = 0; i < paneles.length; i++) {
+            paneles[i].dispose();
+        }
+        Visualizar visualizar = new Visualizar();
+        panelPrincipal.add(visualizar);
+        visualizar.setVisible(true);
+    }//GEN-LAST:event_itemVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,9 +155,9 @@ public class Escritorio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Registrar;
     private javax.swing.JMenuItem itemRegistrar;
+    private javax.swing.JMenuItem itemVisualizar;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JDesktopPane panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }

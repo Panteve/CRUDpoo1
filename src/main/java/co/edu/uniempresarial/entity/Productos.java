@@ -24,6 +24,15 @@ public class Productos {
         this.pro_status = pro_status;
     }
 
+    public Productos(int pro_id, String pro_referencia, String pro_nombre, int pro_stock, int pro_precio, int cat_id) {
+        this.pro_id = pro_id;
+        this.pro_referencia = pro_referencia;
+        this.pro_nombre = pro_nombre;
+        this.pro_stock = pro_stock;
+        this.pro_precio = pro_precio;
+        this.cat_id = cat_id;
+    }
+
     public Productos(String pro_referencia, String pro_nombre, int pro_stock, int pro_precio, int cat_id) {
         this.pro_referencia = pro_referencia;
         this.pro_nombre = pro_nombre;

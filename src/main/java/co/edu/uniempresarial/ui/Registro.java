@@ -23,14 +23,20 @@ public class Registro extends javax.swing.JInternalFrame {
     public Registro() {
 
         initComponents();
-        //Conectar a BD para traer todos las categorias y poner su respectivo nombres en la combo box
-        CategoriasRepository cateRepository = new CategoriasRepository();
+        categoriasBD();
+        limitadorSpi();  
+    }
+    //Conectar a BD para traer todos las categorias y poner su respectivo nombres en la combo box
+    public void categoriasBD(){
+       CategoriasRepository cateRepository = new CategoriasRepository();
         this.categorias = cateRepository.getAllCategorias();
         for (int i = 0; i < categorias.size(); i++) {
             Categorias categoria = categorias.get(i);
             combCategoria.addItem(categoria.getCat_nombre());
-        }
-        //Limitador del spiner 
+        } 
+    }
+    //Limitador del spiner 
+    public void limitadorSpi(){
         SpinnerNumberModel nm = new SpinnerNumberModel();
         nm.setMinimum(0);
         spiStock.setModel(nm);
@@ -73,6 +79,8 @@ public class Registro extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+
+        setTitle("REGISTRO DE PRODUCTOS");
 
         lblReferencia.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblReferencia.setText("Referencia:");
@@ -221,7 +229,7 @@ public class Registro extends javax.swing.JInternalFrame {
         Categorias categoria = this.categorias.get(combCategoria.getSelectedIndex());
         int idCategoria = categoria.getCat_id();
 
-        if (referencia != "" || nombre != "" || precio <= 0 || idCategoria > 0) {
+        if (referencia != "" || nombre != "" || precio <= 0 || idCategoria > 0){
             Productos producto = new Productos(referencia, nombre, stock, precio, idCategoria);
             ProductosRepository proRepository = new ProductosRepository();
             proRepository.registrarProdcuto(producto);

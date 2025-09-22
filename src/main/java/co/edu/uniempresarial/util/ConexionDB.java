@@ -30,7 +30,7 @@ public class ConexionDB {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.con = DriverManager.getConnection(this.url, this.user, this.password);
-            JOptionPane.showMessageDialog(null, "Conectado");
+            System.out.println("Conectado");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No hay conexion:"+ e.getMessage());
             System.out.println("***********Error"+ e);

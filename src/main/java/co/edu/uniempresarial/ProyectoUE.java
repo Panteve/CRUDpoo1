@@ -1,6 +1,7 @@
 package co.edu.uniempresarial;
 
 import co.edu.uniempresarial.entity.Productos;
+import co.edu.uniempresarial.repository.CategoriasRepository;
 import co.edu.uniempresarial.repository.ProductosRepository;
 import co.edu.uniempresarial.util.ConexionDB;
 import java.util.List;
@@ -11,7 +12,16 @@ public class ProyectoUE {
         ConexionDB conDB = new ConexionDB();
         conDB.getConectionDB();
         ProductosRepository repository = new ProductosRepository();
-        //Productos producto = new Productos("NK593","Nike dunk",9,250000);
+        
+        CategoriasRepository repo = new CategoriasRepository();
+        
+        
+               
+        
+        
+        
+        Productos producto = new Productos(4,"TV-001","Televisor",10,450000,2);
+        repository.actualizarProducto(producto);
         //Instanciar tipo repository para insertar en la BD
         /*
         
@@ -27,14 +37,15 @@ public class ProyectoUE {
             System.out.println(producto);
         }
         System.out.println(data);
-         */
+         
  //Traer solo un dato
+ /*
         String sentencia = repository.eleccionSentencia("referencia");
         List<Productos> data = repository.getProducto("nk", sentencia);
         for(int i  = 0; i < data.size(); i++){
             Productos producto = data.get(i);
             System.out.println(producto);
-        }
+        }*/
          
     }
 }

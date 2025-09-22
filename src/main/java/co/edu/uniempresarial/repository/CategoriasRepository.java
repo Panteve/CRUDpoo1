@@ -145,34 +145,35 @@ public class CategoriasRepository {
     }
     
     //Get una categoria
-    public List<Categorias> getProducto(String busqueda) {
-        Connection con = conexionDB.getConectionDB();
-        String sqlQuery = "SELECT * FROM productos WHERE pro_status = 1 AND cat_nombre LIKE ?";
-        List<Categorias> categoriasList = new ArrayList<>();
-        try {
-            if (this.preStm == null) {
-                this.preStm = con.prepareStatement(sqlQuery);
-                this.preStm.setString(1, busqueda + "%");
+   public Categorias getCategoria(int id) {
+    Connection con = conexionDB.getConectionDB();
+    String sqlQuery = "SELECT * FROM categorias WHERE cat_status = 1 AND cat_id = ?";
+    Categorias categoria = null;
+    try {
+        this.preStm = con.prepareStatement(sqlQuery);
+        this.preStm.setInt(1, id);
 
-                ResultSet resultSet = this.preStm.executeQuery();
-                while (resultSet.next()) {
-                    categoriasList.add(new Categorias(resultSet.getInt("cat_id"), resultSet.getString("cat_nombre"), resultSet.getInt("pro_status")));
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error en la sentencia:" + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("error:" + e.getMessage());
-        } finally {
-            if ((con != null) && (this.preStm != null)) {
-                try {
-                    con.close();
-                    this.preStm.close();
-                } catch (SQLException ex) {
-                    System.out.println("error" + ex.getMessage());
-                }
-            }
+        ResultSet resultSet = this.preStm.executeQuery();
+        if (resultSet.next()) {
+            categoria = new Categorias(
+                resultSet.getInt("cat_id"),
+                resultSet.getString("cat_nombre"),
+                resultSet.getInt("cat_status")
+            );
         }
-        return categoriasList;
+    } catch (SQLException e) {
+        System.out.println("Error en la sentencia:" + e.getMessage());
+    } catch (Exception e) {
+        System.out.println("error:" + e.getMessage());
+    } finally {
+        try {
+            if (con != null) con.close();
+            if (this.preStm != null) this.preStm.close();
+        } catch (SQLException ex) {
+            System.out.println("error" + ex.getMessage());
+        }
     }
+    return categoria; // puede devolver null si no encuentra nada
+}
+
 }
