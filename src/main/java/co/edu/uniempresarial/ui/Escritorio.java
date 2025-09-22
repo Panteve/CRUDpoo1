@@ -30,10 +30,12 @@ public class Escritorio extends javax.swing.JFrame {
 
         panelPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        Registrar = new javax.swing.JMenu();
-        itemRegistrar = new javax.swing.JMenuItem();
-        itemVisualizar = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        Productos = new javax.swing.JMenu();
+        itemRegistrarPro = new javax.swing.JMenuItem();
+        itemVisualizarPro = new javax.swing.JMenuItem();
+        Categorias = new javax.swing.JMenu();
+        itemRegistrarCat = new javax.swing.JMenuItem();
+        itemVisualizarCat = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,31 +50,50 @@ public class Escritorio extends javax.swing.JFrame {
             .addGap(0, 271, Short.MAX_VALUE)
         );
 
-        Registrar.setText("Menu");
-        Registrar.addActionListener(new java.awt.event.ActionListener() {
+        Productos.setText("Productos");
+        Productos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarActionPerformed(evt);
+                ProductosActionPerformed(evt);
             }
         });
 
-        itemRegistrar.setText("Registrar");
-        itemRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        itemRegistrarPro.setText("Registrar producto");
+        itemRegistrarPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemRegistrarActionPerformed(evt);
+                itemRegistrarProActionPerformed(evt);
             }
         });
-        Registrar.add(itemRegistrar);
+        Productos.add(itemRegistrarPro);
 
-        itemVisualizar.setText("Visualizar");
-        itemVisualizar.addActionListener(new java.awt.event.ActionListener() {
+        itemVisualizarPro.setText("Visualizar productos");
+        itemVisualizarPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemVisualizarActionPerformed(evt);
+                itemVisualizarProActionPerformed(evt);
             }
         });
-        Registrar.add(itemVisualizar);
+        Productos.add(itemVisualizarPro);
 
-        jMenuBar1.add(Registrar);
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(Productos);
+
+        Categorias.setText("Categorias");
+
+        itemRegistrarCat.setText("Registrar categoria");
+        itemRegistrarCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRegistrarCatActionPerformed(evt);
+            }
+        });
+        Categorias.add(itemRegistrarCat);
+
+        itemVisualizarCat.setText("Visualizar categoria");
+        itemVisualizarCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemVisualizarCatActionPerformed(evt);
+            }
+        });
+        Categorias.add(itemVisualizarCat);
+
+        jMenuBar1.add(Categorias);
 
         setJMenuBar(jMenuBar1);
 
@@ -92,30 +113,50 @@ public class Escritorio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarActionPerformed
+    private void ProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductosActionPerformed
 
-    }//GEN-LAST:event_RegistrarActionPerformed
+    }//GEN-LAST:event_ProductosActionPerformed
 
-    private void itemRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarActionPerformed
+    private void itemRegistrarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarProActionPerformed
         JInternalFrame[] paneles = panelPrincipal.getAllFrames();
         for (int i = 0; i < paneles.length; i++) {
             paneles[i].dispose();
         }
-        Registro registro = new Registro();
+        RegistroPro registro = new RegistroPro();
         panelPrincipal.add(registro);
         registro.setVisible(true);
 
-    }//GEN-LAST:event_itemRegistrarActionPerformed
+    }//GEN-LAST:event_itemRegistrarProActionPerformed
 
-    private void itemVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVisualizarActionPerformed
+    private void itemVisualizarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVisualizarProActionPerformed
         JInternalFrame[] paneles = panelPrincipal.getAllFrames();
         for (int i = 0; i < paneles.length; i++) {
             paneles[i].dispose();
         }
-        Visualizar visualizar = new Visualizar();
+        VisualizarPro visualizar = new VisualizarPro();
         panelPrincipal.add(visualizar);
         visualizar.setVisible(true);
-    }//GEN-LAST:event_itemVisualizarActionPerformed
+    }//GEN-LAST:event_itemVisualizarProActionPerformed
+
+    private void itemRegistrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarCatActionPerformed
+        JInternalFrame[] paneles = panelPrincipal.getAllFrames();
+        for (int i = 0; i < paneles.length; i++) {
+            paneles[i].dispose();
+        }
+        RegistroCat registroCat = new RegistroCat();
+        panelPrincipal.add(registroCat);
+        registroCat.setVisible(true);
+    }//GEN-LAST:event_itemRegistrarCatActionPerformed
+
+    private void itemVisualizarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVisualizarCatActionPerformed
+        JInternalFrame[] paneles = panelPrincipal.getAllFrames();
+        for (int i = 0; i < paneles.length; i++) {
+            paneles[i].dispose();
+        }
+        VisualizarCat visualizar = new VisualizarCat();
+        panelPrincipal.add(visualizar);
+        visualizar.setVisible(true);
+    }//GEN-LAST:event_itemVisualizarCatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,10 +194,12 @@ public class Escritorio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Registrar;
-    private javax.swing.JMenuItem itemRegistrar;
-    private javax.swing.JMenuItem itemVisualizar;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu Categorias;
+    private javax.swing.JMenu Productos;
+    private javax.swing.JMenuItem itemRegistrarCat;
+    private javax.swing.JMenuItem itemRegistrarPro;
+    private javax.swing.JMenuItem itemVisualizarCat;
+    private javax.swing.JMenuItem itemVisualizarPro;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JDesktopPane panelPrincipal;
     // End of variables declaration//GEN-END:variables

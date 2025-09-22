@@ -16,18 +16,18 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author uestudiantes
  */
-public class Registro extends javax.swing.JInternalFrame {
+public class RegistroPro extends javax.swing.JInternalFrame {
 
     private List<Categorias> categorias;
 
-    public Registro() {
+    public RegistroPro() {
 
         initComponents();
-        categoriasBD();
+        categoriasComb();
         limitadorSpi();  
     }
     //Conectar a BD para traer todos las categorias y poner su respectivo nombres en la combo box
-    public void categoriasBD(){
+    public void categoriasComb(){
        CategoriasRepository cateRepository = new CategoriasRepository();
         this.categorias = cateRepository.getAllCategorias();
         for (int i = 0; i < categorias.size(); i++) {
@@ -242,7 +242,6 @@ public class Registro extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error en datos");
         }
 
-        //JOptionPane.showMessageDialog(null,);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped

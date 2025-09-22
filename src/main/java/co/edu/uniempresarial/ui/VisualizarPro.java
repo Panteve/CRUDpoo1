@@ -8,6 +8,8 @@ import co.edu.uniempresarial.entity.Categorias;
 import co.edu.uniempresarial.entity.Productos;
 import co.edu.uniempresarial.repository.CategoriasRepository;
 import co.edu.uniempresarial.repository.ProductosRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,42 +20,53 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author DIEGO
  */
-public class Visualizar extends javax.swing.JInternalFrame {
+public class VisualizarPro extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Visualizar
-     */
-    public Visualizar() {
+    private final String columnas[] = {"ID", "Referencia", "Nombre", "Stock", "Precio", "Categoria"};
+
+    public VisualizarPro() {
         initComponents();
-        inicializarTabla();
+        filtroComb(columnas);
+        inicializarTabla(traerDatos());
     }
 
-    public void inicializarTabla() {
-
+    public void inicializarTabla(List<Productos> productos) {
         CategoriasRepository catRepository = new CategoriasRepository();
-        String columnas[] = {"ID", "Referencia", "Nombre", "Stock", "Precio", "Categoria"};
-        List<Productos> productosList = traerDatos();
+        List<Productos> productosList = productos;
+        
+        String sqlQuery = catRepository.eleccionSentencia("id");
 
         Object[][] data = new Object[productosList.size()][columnas.length];
 
         for (int i = 0; i < productosList.size(); i++) {
             Productos producto = productosList.get(i);
-            
+
             data[i][0] = producto.getPro_id();
             data[i][1] = producto.getPro_referencia();
             data[i][2] = producto.getPro_nombre();
             data[i][3] = producto.getPro_stock();
             data[i][4] = producto.getPro_precio();
             
-            Categorias categoria = catRepository.getCategoria(producto.getCat_id());
-            
-            
+            String id = Integer.toString(producto.getCat_id()); 
+            Categorias categoria = catRepository.getCategoria(id ,sqlQuery).get(0);
             data[i][5] = categoria.getCat_nombre();
 
         }
 
         DefaultTableModel model = new DefaultTableModel(data, columnas);
         tblDatos.setModel(model);
+    }
+
+    private void filtroComb(String[] columnas) {
+        List<String> lista = new ArrayList<>(Arrays.asList(columnas));
+
+        lista.remove(0);
+        lista.remove(lista.size() - 1);
+
+        for (int i = 0; i < lista.size(); i++) {
+            combBuscar.addItem(lista.get(i));
+        }
+
     }
 
     public List<Productos> traerDatos() {
@@ -65,6 +78,17 @@ public class Visualizar extends javax.swing.JInternalFrame {
         }
 
         return productosList;
+    }
+
+    public void buscar() {
+        String busqueda = txtBuscar.getText();
+        String eleccion = combBuscar.getSelectedItem().toString().toLowerCase();
+        ProductosRepository proRepository = new ProductosRepository();
+        String sentencia = proRepository.eleccionSentencia(eleccion);
+
+        List<Productos> productosList = proRepository.getProducto(busqueda, sentencia);
+
+        inicializarTabla(productosList);
     }
 
     /**
@@ -82,6 +106,13 @@ public class Visualizar extends javax.swing.JInternalFrame {
         lblTitulo = new javax.swing.JLabel();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        combBuscar = new javax.swing.JComboBox<>();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        lbBuscar = new javax.swing.JLabel();
+
+        setTitle("Visualizacion de productos");
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,37 +148,76 @@ public class Visualizar extends javax.swing.JInternalFrame {
         }
     });
 
+    txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            txtBuscarKeyReleased(evt);
+        }
+    });
+
+    btnBuscar.setText("Buscar");
+    btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnBuscarActionPerformed(evt);
+        }
+    });
+
+    lbBuscar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+    lbBuscar.setText("Buscador");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
+            .addGap(15, 15, 15)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(34, 34, 34))
+        .addComponent(jSeparator1)
         .addGroup(layout.createSequentialGroup()
-            .addGap(393, 393, 393)
+            .addGap(55, 55, 55)
+            .addComponent(combBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addComponent(txtBuscar)
+            .addGap(18, 18, 18)
+            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(29, 29, 29))
+        .addGroup(layout.createSequentialGroup()
+            .addGap(438, 438, 438)
             .addComponent(lblTitulo)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbBuscar)
+            .addGap(494, 494, 494))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
+            .addComponent(lbBuscar)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(combBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(13, 13, 13)
+                    .addGap(17, 17, 17)
                     .addComponent(lblTitulo)
                     .addGap(18, 18, 18)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(73, 73, 73))
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(118, 118, 118)
+                    .addGap(103, 103, 103)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(98, 98, 98)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(112, 112, 112))))
     );
 
     pack();
@@ -161,11 +231,11 @@ public class Visualizar extends javax.swing.JInternalFrame {
 
             //Esta partte hace que el dialog funcione, ya que al estar en un internalform no funciona, se le hace pasar es el padre del internal como jframe para que funcione
             JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
-            ModificarDialog modificarDialog = new ModificarDialog(parent, true);
+            ModificarProDialog modificarDialog = new ModificarProDialog(parent, true);
             modificarDialog.setProducto(referencia, categoria);
             modificarDialog.setVisible(true);
 
-            inicializarTabla();
+            inicializarTabla(traerDatos());
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un prodcuto");
         }
@@ -174,7 +244,7 @@ public class Visualizar extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int fila = tblDatos.getSelectedRow();
         if (fila != -1) {
-            
+
             String nombre = tblDatos.getValueAt(fila, 2).toString();
             int confirmacion = JOptionPane.showConfirmDialog(this, "Seguro que quiere elminar el siguiente producto: " + nombre, "Confirmacion", JOptionPane.YES_NO_OPTION);
 
@@ -182,20 +252,35 @@ public class Visualizar extends javax.swing.JInternalFrame {
                 int id = Integer.parseInt(tblDatos.getValueAt(fila, 0).toString());
                 ProductosRepository proRepository = new ProductosRepository();
                 proRepository.bajaProducto(id);
-                inicializarTabla();
-            } 
+                inicializarTabla(traerDatos());
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un prodcuto");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+        buscar();
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        buscar();
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> combBuscar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbBuscar;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tblDatos;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

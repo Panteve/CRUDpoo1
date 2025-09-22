@@ -184,7 +184,7 @@ public class ProductosRepository {
 
                 ResultSet resultSet = this.preStm.executeQuery();
                 while (resultSet.next()) {
-                    productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("pro_status"), resultSet.getInt("cat_id")));
+                    productosList.add(new Productos(resultSet.getInt("pro_id"), resultSet.getString("pro_referencia"), resultSet.getString("pro_nombre"), resultSet.getInt("pro_stock"), resultSet.getInt("pro_precio"), resultSet.getInt("cat_id"), resultSet.getInt("pro_status")));
                 }
             }
         } catch (SQLException e) {

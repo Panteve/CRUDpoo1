@@ -19,6 +19,11 @@ public class Categorias {
         this.cat_status = cat_status;
     }
 
+    public Categorias(int cat_id, String cat_nombre) {
+        this.cat_id = cat_id;
+        this.cat_nombre = cat_nombre;
+    }
+
     public Categorias(String cat_nombre) {
         this.cat_nombre = cat_nombre;
     }
