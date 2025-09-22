@@ -146,31 +146,32 @@ public class CategoriasRepository {
         }
         return true;
     }
+
     //Seleccion de la sentencia 
-     public String eleccionSentencia(String eleccion){
+    public String eleccionSentencia(String eleccion) {
         String sqlQuery = "";
         if ("id".equals(eleccion)) {
-            sqlQuery = "SELECT * FROM categorias WHERE cat_status = 1 AND cat_id = ?";
+            sqlQuery = "SELECT * FROM categorias WHERE cat_status = 1 AND cat_id LIKE ?";
         } else if ("nombre".equals(eleccion)) {
             sqlQuery = "SELECT * FROM categorias WHERE cat_status = 1 AND cat_nombre LIKE ?";
         }
         return sqlQuery;
     }
-    
+
     //Get una categoria
     public List<Categorias> getCategoria(String busqueda, String sqlQuery) {
         Connection con = conexionDB.getConectionDB();
         List<Categorias> categoriasList = new ArrayList();
+        System.out.println(busqueda);
+        System.out.println(sqlQuery);
         try {
-            if (this.preStm == null) {
-                this.preStm = con.prepareStatement(sqlQuery);
-                this.preStm.setString(1, busqueda + "%");
-
-                ResultSet resultSet = this.preStm.executeQuery();
-                while (resultSet.next()) {
-                    categoriasList.add(new Categorias(resultSet.getInt("cat_id"), resultSet.getString("cat_nombre"), resultSet.getInt("cat_status")));
-                }
+            this.preStm = con.prepareStatement(sqlQuery);
+            this.preStm.setString(1, busqueda + "%");
+            ResultSet resultSet = this.preStm.executeQuery();
+            while (resultSet.next()) {
+                categoriasList.add(new Categorias(resultSet.getInt("cat_id"), resultSet.getString("cat_nombre"), resultSet.getInt("cat_status")));
             }
+
         } catch (SQLException e) {
             System.out.println("Error en la sentencia:" + e.getMessage());
         } catch (Exception e) {
@@ -187,7 +188,7 @@ public class CategoriasRepository {
                 System.out.println("error" + ex.getMessage());
             }
         }
-        return categoriasList; 
+        return categoriasList;
     }
 
 }
