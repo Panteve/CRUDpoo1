@@ -1,20 +1,20 @@
-
 package co.edu.uniempresarial.entity;
 
 import java.util.logging.Logger;
 
 public class Productos {
+
     //Atributos
-    private int pro_id ;
-    private String pro_referencia ;
+    private int pro_id;
+    private String pro_referencia;
     private String pro_nombre;
     private int pro_stock;
     private int pro_precio;
     private int cat_id;
     private int pro_status;
-     //Constructores 
+    //Constructores 
 
-    public Productos(int pro_id, String pro_referencia, String pro_nombre, int pro_stock, int pro_precio,int cat_id ,int pro_status) {
+    public Productos(int pro_id, String pro_referencia, String pro_nombre, int pro_stock, int pro_precio, int cat_id, int pro_status) {
         this.pro_id = pro_id;
         this.pro_referencia = pro_referencia;
         this.pro_nombre = pro_nombre;
@@ -38,10 +38,7 @@ public class Productos {
         this.pro_nombre = pro_nombre;
         this.pro_stock = pro_stock;
         this.pro_precio = pro_precio;
-         this.cat_id = cat_id;
-    }
-
-    public Productos() {
+        this.cat_id = cat_id;
     }
 
     public int getCat_id() {
@@ -51,7 +48,6 @@ public class Productos {
     public void setCat_id(int cat_id) {
         this.cat_id = cat_id;
     }
-    
 
     public int getPro_id() {
         return pro_id;
@@ -106,5 +102,4 @@ public class Productos {
         return "Productos{" + "pro_id=" + pro_id + ", pro_referencia=" + pro_referencia + ", pro_nombre=" + pro_nombre + ", pro_stock=" + pro_stock + ", pro_precio=" + pro_precio + ", cat_id=" + cat_id + ", pro_status=" + pro_status + '}';
     }
 
-    
 }

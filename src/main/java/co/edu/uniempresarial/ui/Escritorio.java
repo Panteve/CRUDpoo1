@@ -116,43 +116,38 @@ public class Escritorio extends javax.swing.JFrame {
     private void ProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProductosActionPerformed
 
     }//GEN-LAST:event_ProductosActionPerformed
-
-    private void itemRegistrarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarProActionPerformed
+    
+    private void cerrarVentanasAbiertas(){
         JInternalFrame[] paneles = panelPrincipal.getAllFrames();
         for (int i = 0; i < paneles.length; i++) {
             paneles[i].dispose();
         }
+    }
+    
+    private void itemRegistrarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarProActionPerformed
+        cerrarVentanasAbiertas();
         RegistroPro registro = new RegistroPro();
         panelPrincipal.add(registro);
         registro.setVisible(true);
-
     }//GEN-LAST:event_itemRegistrarProActionPerformed
 
+    
     private void itemVisualizarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVisualizarProActionPerformed
-        JInternalFrame[] paneles = panelPrincipal.getAllFrames();
-        for (int i = 0; i < paneles.length; i++) {
-            paneles[i].dispose();
-        }
+        cerrarVentanasAbiertas();
         VisualizarPro visualizar = new VisualizarPro();
         panelPrincipal.add(visualizar);
         visualizar.setVisible(true);
     }//GEN-LAST:event_itemVisualizarProActionPerformed
 
     private void itemRegistrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarCatActionPerformed
-        JInternalFrame[] paneles = panelPrincipal.getAllFrames();
-        for (int i = 0; i < paneles.length; i++) {
-            paneles[i].dispose();
-        }
+        cerrarVentanasAbiertas();
         RegistroCat registroCat = new RegistroCat();
         panelPrincipal.add(registroCat);
         registroCat.setVisible(true);
     }//GEN-LAST:event_itemRegistrarCatActionPerformed
 
     private void itemVisualizarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVisualizarCatActionPerformed
-        JInternalFrame[] paneles = panelPrincipal.getAllFrames();
-        for (int i = 0; i < paneles.length; i++) {
-            paneles[i].dispose();
-        }
+        cerrarVentanasAbiertas();
         VisualizarCat visualizar = new VisualizarCat();
         panelPrincipal.add(visualizar);
         visualizar.setVisible(true);

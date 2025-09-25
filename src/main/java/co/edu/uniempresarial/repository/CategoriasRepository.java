@@ -64,7 +64,7 @@ public class CategoriasRepository {
             this.preStm = con.prepareStatement(sqlQuery);
             //Los datos de la tabla se guardan en el resultSet
             ResultSet resultSet = this.preStm.executeQuery();
-            while (resultSet.next()) {
+            while(resultSet.next()) {
                 categoriasList.add(new Categorias(resultSet.getInt("cat_id"), resultSet.getString("cat_nombre"), resultSet.getInt("cat_status")));
             }
         } catch (SQLException e) {
