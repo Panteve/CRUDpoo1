@@ -103,7 +103,6 @@ public class ProductosRepository {
                 this.preStm.setInt(5, producto.getCat_id());
                 this.preStm.setInt(6, producto.getPro_id());
                 
-                System.out.println(producto.getCat_id());
 
                 int response = this.preStm.executeUpdate();
                 if (response > 0) {

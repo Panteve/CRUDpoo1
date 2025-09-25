@@ -229,7 +229,7 @@ public class RegistroPro extends javax.swing.JInternalFrame {
         Categorias categoria = this.categorias.get(combCategoria.getSelectedIndex());
         int idCategoria = categoria.getCat_id();
 
-        if (referencia != "" || nombre != "" || precio <= 0 || idCategoria > 0){
+        if (referencia != "" || nombre != "" || precio < 0 || idCategoria > 0){
             Productos producto = new Productos(referencia, nombre, stock, precio, idCategoria);
             ProductosRepository proRepository = new ProductosRepository();
             proRepository.registrarProdcuto(producto);
