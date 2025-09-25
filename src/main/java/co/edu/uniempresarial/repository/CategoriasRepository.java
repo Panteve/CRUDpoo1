@@ -162,8 +162,6 @@ public class CategoriasRepository {
     public List<Categorias> getCategoria(String busqueda, String sqlQuery) {
         Connection con = conexionDB.getConectionDB();
         List<Categorias> categoriasList = new ArrayList();
-        System.out.println(busqueda);
-        System.out.println(sqlQuery);
         try {
             this.preStm = con.prepareStatement(sqlQuery);
             this.preStm.setString(1, busqueda + "%");
